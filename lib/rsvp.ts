@@ -21,32 +21,41 @@ function normalizePhone(phone?: string) {
   return (phone ?? '').replace(/\D/g, '')
 }
 
-export async function submitRsvp(data: Omit<Rsvp, 'id' | 'createdAt'>) {
-  const rsvpRef = ref(db, RSVP_PATH)
+export async function submitRsvp(
+  data: Omit<Rsvp, 'id' | 'createdAt'>,
+): Promise<'created' | 'updated'> {
   const normalized = normalizePhone(data.phone)
 
-  // If a phone number was provided, check for an existing RSVP with the same
-  // phone and update it in place instead of creating a duplicate entry.
   if (normalized) {
-    const snapshot = await get(rsvpRef)
-    const value = snapshot.val() as Record<string, Omit<Rsvp, 'id'>> | null
-    if (value) {
-      const existing = Object.entries(value).find(
-        ([, item]) => normalizePhone(item.phone) === normalized,
+    const recordRef = ref(db, `${RSVP_PATH}/${normalized}`)
+    const snap = await get(recordRef)
+    const existed = snap.exists()
+
+    await set(recordRef, {
+      ...data,
+      createdAt: existed ? (snap.val().createdAt ?? Date.now()) : Date.now(),
+      updatedAt: Date.now(),
+    })
+
+    // Remove any old push-keyed duplicates for this phone number
+    const allRef = ref(db, RSVP_PATH)
+    const allSnap = await get(allRef)
+    const all = allSnap.val() as Record<string, Omit<Rsvp, 'id'>> | null
+    if (all) {
+      const duplicates = Object.entries(all).filter(
+        ([key, item]) => key !== normalized && normalizePhone(item.phone) === normalized,
       )
-      if (existing) {
-        const [existingId, existingItem] = existing
-        await set(ref(db, `${RSVP_PATH}/${existingId}`), {
-          ...data,
-          createdAt: existingItem.createdAt ?? Date.now(),
-          updatedAt: Date.now(),
-        })
-        return
-      }
+      await Promise.all(
+        duplicates.map(([key]) => remove(ref(db, `${RSVP_PATH}/${key}`))),
+      )
     }
+
+    return existed ? 'updated' : 'created'
   }
 
+  const rsvpRef = ref(db, RSVP_PATH)
   await push(rsvpRef, { ...data, createdAt: Date.now() })
+  return 'created'
 }
 
 export function subscribeToRsvps(callback: (rsvps: Rsvp[]) => void) {

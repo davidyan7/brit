@@ -17,6 +17,7 @@ export function RsvpForm() {
   const [status, setStatus] = useState<'idle' | 'saving' | 'done' | 'error'>(
     'idle',
   )
+  const [outcome, setOutcome] = useState<'created' | 'updated'>('created')
 
   const isComing = attendance === 'yes'
 
@@ -25,13 +26,14 @@ export function RsvpForm() {
     if (!name.trim() || !phone.trim() || !attendance) return
     setStatus('saving')
     try {
-      await submitRsvp({
+      const result = await submitRsvp({
         name: name.trim(),
         phone: phone.trim(),
         attendance,
         guests: isComing ? guests : 0,
         message: message.trim(),
       })
+      setOutcome(result)
       setStatus('done')
     } catch (err) {
       console.log('[v0] rsvp submit error:', err)
@@ -48,7 +50,9 @@ export function RsvpForm() {
         <p className="text-lg leading-relaxed text-card-foreground">
           {attendance === 'no'
             ? 'קיבלנו את תשובתכם. נשמח לראותכם בשמחות הבאות.'
-            : 'אישור ההגעה שלכם נקלט. נשמח לחגוג יחד!'}
+            : outcome === 'updated'
+              ? 'עדכנו את אישור ההגעה שלכם. נשמח לחגוג יחד!'
+              : 'אישור ההגעה שלכם נקלט. נשמח לחגוג יחד!'}
         </p>
       </div>
     )
