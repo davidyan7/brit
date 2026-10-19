@@ -8,10 +8,10 @@ export default function Page() {
         {/* Invitation */}
         <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D7%94%D7%96%D7%9E%D7%A0%D7%94%20%D7%9C%D7%91%D7%A8%D7%99%D7%AA-XKGWa41dkKQK9SCv8ZlZT5mTW7kWXR.png"
-            alt="הזמנה לברית המילה וזבד הבנות של משפחת דודיאן"
-            width={1240}
-            height={1754}
+            src="/invitation.jpg?v=3"
+            alt="הזמנה לבריתולדת של פלג — משפחת נחימוב ברגר"
+            width={572}
+            height={1024}
             priority
             className="h-auto w-full"
           />
@@ -43,10 +43,10 @@ export default function Page() {
             הוראות הגעה
           </h2>
           <p className="mt-3 text-lg leading-relaxed text-muted-foreground text-pretty">
-            {'גן אירועים "חוות מדמון" · בני ראם'}
+            {'נחלים 3 · בצרה'}
           </p>
           <a
-            href="https://waze.com/ul/hsv8sxw79s"
+            href="https://waze.com/ul?q=%D7%A0%D7%97%D7%9C%D7%99%D7%9D%203%2C%20%D7%91%D7%A6%D7%A8%D7%94&navigate=yes"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-lg font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
@@ -59,12 +59,12 @@ export default function Page() {
               className="h-6 w-6"
               aria-hidden="true"
             />
-            נסיעה עם Waze אל חוות מדמון
+            נסיעה עם Waze אל נחלים 3, בצרה
           </a>
         </div>
 
         <footer className="mt-10 text-center text-base text-muted-foreground">
-          <p>נשמח לראותכם — משפחת דודיאן</p>
+          <p>נשמח לראותכם — משפחת נחימוב ברגר</p>
         </footer>
       </div>
     </main>

@@ -16,8 +16,8 @@ const heebo = Heebo({
 })
 
 export const metadata: Metadata = {
-  title: 'אישור הגעה לברית - משפחת דודיאן',
-  description: 'אנא אשרו את הגעתכם לברית המילה וזבד הבנות של משפחת דודיאן',
+  title: 'אישור הגעה לבריתולדת - משפחת נחימוב ברגר',
+  description: 'אנא אשרו את הגעתכם לבריתולדת של פלג — משפחת נחימוב ברגר',
   generator: 'v0.app',
 }
 
