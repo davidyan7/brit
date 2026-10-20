@@ -6,12 +6,12 @@ export default function Page() {
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-2xl px-4 py-10 sm:py-16">
         {/* Invitation */}
-        <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+        <div className="mx-auto max-w-md overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
           <Image
-            src="/invitation.jpg?v=3"
+            src="/invitation.png?v=4"
             alt="הזמנה לבריתולדת של פלג — משפחת נחימוב ברגר"
-            width={572}
-            height={1024}
+            width={934}
+            height={1687}
             priority
             className="h-auto w-full"
           />
